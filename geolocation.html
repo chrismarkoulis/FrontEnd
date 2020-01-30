@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Geolocation API</title>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/build/ol.js"></script>
+</head>
+
+<body>
+    <div id="map" class="map"></div>
+    <script>
+        // 1) Declare success function
+        function success(position) {
+            console.log(position);
+            // position.coords.latitude, position.coords.longitude
+            const map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([
+                        position.coords.longitude, position.coords.latitude
+                    ]),
+                    zoom: 17
+                })
+            });
+
+        }
+        // 2) Declare error function
+        function error(err) {
+            console.log(err);
+        }
+        // 3) Check if geolocation API is available
+        if (navigator.geolocation) {
+            // 4) Use navigator.geolocation.getCurrentPosition( SUCCESS, ERROR )
+            navigator.geolocation.getCurrentPosition(success, error);
+            // async/await
+
+        } else {
+            // Inform the user about unavailable service
+        }
+    </script>
+</body>
+
+</html>

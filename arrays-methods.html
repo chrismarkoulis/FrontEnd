@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <ul id="products">
+
+    </ul>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script>
+        function getSquare( x ){
+            return x * x;
+        }
+
+        // 1 - Mapping
+        let numbers = [ 1, 2, 3 ];
+        // let squares = [];
+        // for ( let i = 0; i < numbers.length; i++ ){
+        //     const square = getSquare( numbers[i] );
+        //     squares.push( square );
+        // }
+        // Input -> Map(f) -> Output
+        const squares = numbers.map( getSquare );
+        console.log( squares );
+
+        // 2 - Filtering
+        const products = [
+            {
+                "color":"tan",
+                "department":"Shoes",
+                "name":"Licensed Cotton Pizza",
+                "product":"Chair",
+                "price":"84.00"
+            },
+            {"color":"lavender","department":"Beauty","name":"Intelligent Metal Shirt","product":"Tuna","price":"292.00"},{"color":"magenta","department":"Kids","name":"Sleek Rubber Shoes","product":"Sausages","price":"987.00"},{"color":"gold","department":"Industrial","name":"Ergonomic Metal Chair","product":"Keyboard","price":"563.00"},
+            {
+                color:"silver",
+                department:"Automotive",
+                "name":"Rustic Wooden Fish",
+                "product":"Pizza",
+                "price":"490.00",
+                "my name!? @": "Kostas"
+            }
+        ];
+        function isHighEnd( product ){
+            //console.log( product );
+            price = parseFloat( product.price );
+            return ( price > 300 );
+        }
+        // const highEnd = [];
+        // for ( let i = 0; i < products.length; i++ ){
+        //     if ( isHighEnd( products[i].price ) ){
+        //         highEnd.push( products[i] );
+        //     }
+        // }
+        // const highEnd = products.filter( isHighEnd );
+        const highEnd = products.filter(isHighEnd);
+
+        // PRACTICE: Use reduce() to get the total of the products in the highEnd Array
+        // function getTotal( ... ){ ... }
+        // const total = highEnd.reduce( getTotal, 0 );
+
+        // 3 - Looping
+        console.log(highEnd);
+        function displayProduct( product ){
+            $("#products")
+            .append(
+                `
+                <li class="product">
+                    <strong>${product.name}</strong>
+                    / Price: ${product.price} &euro;
+                </li>
+                `
+            );
+
+        }
+        // for ( let i = 0; i < highEnd.length; i++ ){
+        //     displayProduct( highEnd[i] );
+        // }
+        // highEnd.map( displayProduct );  // Returns List
+        highEnd.forEach( displayProduct ); // Return Nothing
+
+        const lis = document.querySelectorAll("li");
+        console.log( lis.length );
+        console.log( lis[1] );
+        lis.forEach(function(li){
+            li.style.background = "orange";
+            // li.style.display = "none";
+        });
+
+        // Chaining
+        const result = [1,2,3,4,5,6]
+        .map(function(num){
+            return num * num;
+        })
+        .map(function(num){
+            return num * 100;
+        })
+        .filter(function(num){
+            return num < 700;
+        });
+
+        console.log( result );
+
+        // products
+        // .map( addVAT )
+        // .filter( lessThan400 )
+        // .filter( hasSDD );
+
+    </script>
+    
+</body>
+</html>

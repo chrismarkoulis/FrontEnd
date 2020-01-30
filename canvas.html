@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Canvas API</title>
+    <style> canvas { border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <!-- 1) Place our canvas -->
+    <canvas id="paint" width="200" height="200"></canvas>
+    <script>
+        const canvas = document.getElementById("paint");
+        // 2) Get Canvas context
+        const ctx = canvas.getContext("2d");
+        // 3) Use context methods/properties
+        ctx.fillStyle = "orange";
+        ctx.fillRect(0,0,100,100);
+        ctx.fillStyle = "indigo";
+        ctx.fillRect( 50, 50, 100, 100 );
+        ctx.clearRect( 50, 50, 50, 50 );
+        ctx.strokeStyle = "black";
+        ctx.strokeRect( 150, 150, 50, 50 );
+        // Text:
+        ctx.font = "60px Arial";
+        ctx.fillText( "Canvas", 10, 45 );
+        ctx.strokeText( "Wow", 0, 100 );
+        // Paths:
+        ctx.beginPath();
+        ctx.moveTo(50,150);
+        ctx.lineTo(0,200);
+        ctx.lineTo(50,200);
+        ctx.lineTo(50,150);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+        // Arc
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(255,0,0,0.5)";
+        ctx.arc(100,100,70, 0 ,2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+
+    </script>
+</body>
+</html>

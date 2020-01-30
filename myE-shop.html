@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        h1{
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            color: #000;
+            font-style: italic;
+        }
+        body{
+        background-color: lightblue;
+
+         }
+        nav{
+            background-color: white;
+            margin-right: 1%;
+            margin-left: 1%;
+            padding: 10px;
+            border: 2px solid;
+            text-align: right;
+         }
+         article {
+        width: 23%;
+        border: 2px solid black;
+        display: inline-block;
+        padding: 10px;
+        margin: 1%;
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        background-color: white;
+          }
+         article p {
+        min-height: 4rem;
+        line-height: 1rem;
+        font-family: Arial, sans-serif;
+          }
+   
+         #price{
+        margin: 10px;
+        min-width: 60px;
+        display: inline-block;
+         }
+         @media(max-width: 630px){
+             body{
+                 background-color: yellow;
+             }
+             article{
+                 width: 48%;
+             }
+         }
+         @media(max-width: 380px){
+             body{
+                 background-color: red;
+             }
+             article{
+                 width: 98%;
+                 margin: 2%;
+                 display: inline-block;
+             }
+         }
+
+</style>
+</head>
+
+<body>
+    <h1>My Shop</h1>
+    <nav>
+        Shopping Cart: <i class="fas fa-shopping-cart"></i>
+        <strong id="num">0
+        </strong><span id="price">Total Value: <strong id="total">0
+
+            </strong>&euro;</span>
+    </nav>
+  
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script>
+        $("h1").css({ left:0,position: "relative", width:"200"}).animate({
+            
+           // fontSize: "40px",
+            //backgroundColor:"indigo",
+            left: "400px"
+        }, 0, function(){
+            $("h1").animate({left:0},2000);
+        });
+        function init(){
+
+            
+            const cart = [];
+            let value = 0;
+           
+
+            const URL = "https://api.myjson.com/bins/103ou6";
+
+            const options = {
+                    url: URL,
+                    success: handleSuccess,
+                    error: handleError
+                };  
+
+                //callback function, its the only place where 
+                //i can get the desired data
+            function handleSuccess(data,status){
+                   
+                    console.log("data",data);
+                    console.log("status",status);
+                    data.forEach(displayProduct);
+                   
+                }
+
+                function handleError(any){
+                console.log("handleError", any);
+            }
+
+
+             
+
+                $.ajax(options);
+              //  console.log("result: ", data);
+
+                
+            //************* EVENTS **************//
+
+                // document.body.addEventListener("keyup", function(ev){
+                //     console.log(ev.type,ev);
+                // })
+
+                // $(documet.body).keyup(function(e){...});
+
+                // function handleClick(e){}
+
+                // el.addEventListener("click",handleClick);
+                // el.removeEventListener("click",handleClick);
+
+                // el.$(selector).remove();
+
+            //**********************************//
+
+           function displayProduct(product, index){
+
+               //jQuery
+                
+                const article = $("<article/>");
+                const p = $("<p/>");
+                const img = $("<img/>");
+               
+               //'add to cart' button 
+                const btn = $("<button/>");
+                btn.text("Add to cart");
+               
+               
+
+                btn.click(function(e){
+                console.log(index, this);
+                cart.push(product);
+                $("#num").text(cart.length);
+
+                value = value + product.price;
+                $("#total").text(value.toFixed(2));
+                console.log(value);
+                
+
+                });
+                    
+
+                p.html("<p>Name: " + product.name +
+                " | Price: <mark>" + product.price + 
+                    "</mark></p>");
+
+               $(document.body).append(article);
+               article.append(p);
+               article.append(img);
+               article.append(btn);
+               
+              // article.append(img);
+
+                // img.attr("src",product.imgUrl);
+                // img.attr("alt",product.name);
+                // img.attr("width",100);
+
+                    img.attr({
+                        src: product.imgUrl,
+                        alt: product.name,
+                        width: 100
+                    });
+            }
+        }
+        $(init);
+        
+        // $( function(){} );
+        //$(document).ready( function(){} );
+        
+    </script>
+</body>
+
+</html>

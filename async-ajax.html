@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Async - Promises</title>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/build/ol.js"></script>
+</head>
+
+<body>
+    <div id="map" class="map"></div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        const URL = "http://restcountries.eu/rest/v2/name/portugal";
+        console.log(1);
+        let remoteData;
+        function displayMap(lonlat){
+            const map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj
+                    .fromLonLat(lonlat),
+                    zoom: 6
+                })
+            });
+        }
+        // AJAX Using Callbacks
+        $.ajax({
+            url: URL,
+            success: function (data) {
+                remoteData = data;
+                console.log(data[0].latlng);
+                displayMap(data[0].latlng.reverse());
+            }
+        });
+        console.log(remoteData); // undefined
+        console.log(2);
+
+        // Fetch API (Promise-based) (JSON)
+        function success( response ){
+            console.log( "Success:", response );
+            return response.json();
+        }
+        function failure( error ){
+            console.log( error );
+        }
+        fetch( URL )
+        .then( success )
+        .then(function(data){
+            console.log(data);
+            return 42;
+        })
+        .then(function(prev){
+            console.log(prev);
+        })
+        .catch(failure);
+
+        // Fetch with Text
+        fetch("https://raw.githubusercontent.com/kostasx/EventLoop/master/README.md")
+        .then( res => res.text() )
+        .then( data => console.log(data) );
+
+        // Create a Promise-based Function
+        const promiseSetTimeout = new Promise((resolve,reject)=>{
+            setTimeout(function(){
+                resolve("5\" passed!");
+            }, 5000 );
+            // if ( Math.random() > 0.5 ){
+            //     resolve("OK");
+            // } else {
+            //     reject("ERROR");
+            // }
+        });
+
+        promiseSetTimeout
+        .then( res => console.log(res) )
+        .catch( err => console.log(err) );
+
+        // ASYNC/AWAIT
+        async function getCountryData(){
+            try {
+                const response = await fetch( URL );
+                const data = await response.json();
+                console.log( data );
+            } catch(e){
+
+            }
+        }
+        getCountryData();
+
+        // IIFE: Immedietally Invoked Function Expression
+        (async function(){
+            const response = await $.ajax({ url: URL });
+            console.log( "Check:", response );
+        }());
+    </script>
+
+</body>
+
+</html>

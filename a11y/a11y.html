@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>A11Y</title>
+    <link rel="stylesheet" href="a11y.css">
+</head>
+<body>
+    <a href="#maincontent" class="skip-link">Go to Main Content</a>
+    <header>
+        <a href="">LOGO</a>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Gallery</a></li>
+            <li><a href="">Contact</a></li>
+            <li><a href="">Links</a></li>
+        </ul>
+        <div id="msg" data-count="12">Messages</div>
+    </header>
+    <main id="maincontent" tabindex="-1">Main</main>
+    <footer>Footer</footer>
+    <script>
+        fetch("https://api.myjson.com/bins/9oroa")
+        .then(res => res.json())
+        .then(messages => { 
+            console.log(messages);
+            const count = messages.length;
+            // apply count to the #msg data-count attr
+            const msg = document.querySelector("#msg");
+            msg.setAttribute("data-count", count);
+            
+        })
+        .catch(err => console.log(err));
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flex Layout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+</head>
+<body>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header{ background-color: yellowgreen; padding: 10px; display: flex;
+        justify-content: space-between;
+        align-items: center;
+         }
+        main { 
+            background-color: gray; flex-grow: 1; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        footer { 
+            background-color: tomato; padding: 16px;
+            display: flex;
+        }
+        .p-1 {
+            padding: 1rem;
+        }
+        .justify-center {
+            justify-content: center; 
+        }
+        footer .fab {
+            margin: 0 10px;
+        }
+        ul { list-style: none; display: flex; padding-left: 0; }
+        li { margin-right: 15px; }
+        DIS* { border: 1px dashed gray; }
+    </style>
+    <header>
+        <a href="#">Logo</a>
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact</li>
+        </ul>
+    </header>
+    <main>MAIN CONTENT</main>
+    <footer class="justify-center">
+        <i class="fab fa-youtube-square"></i>
+        <i class="fab fa-twitter-square"></i>
+        <i class="fab fa-facebook-square"></i>
+    </footer>
+    
+</body>
+</html>

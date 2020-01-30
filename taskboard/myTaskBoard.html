@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DnD TaskBoard</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+    <h1 class="text-center text-primary"><i class="text-info">my</i>TaskBoard</h1>
+    <br>
+    <br>
+    <div class="col text-center">
+        <label for="title"></label>
+    <input type="text" id="title" placeholder="enter task title...">
+        <button id="button" type="submit" class="btn btn-primary text-center border border-secondary">Add Task</button>
+    </div>
+    <br>
+    <br>
+    <div class="container shadow">
+        <div class="row">
+            <div id="drop1" class="col-sm-4 text-center border border-dark">
+                <div class="bg-dark">
+                    <i class="text-white">Tasks</i>
+                    <div id="drag1" draggable="true" class="bg-primary text-white border">Application Planning</div>
+                    <div id="drag2" draggable="true" class="bg-primary text-white border">Boilerplate</div>
+                    <div id="drag3" draggable="true" class="bg-primary text-white border">Coding</div>
+                </div>
+            </div>
+            <div id="drop2" class="js-drop col-sm-4 text-center border border-dark">
+                <div class="bg-warning">
+                    <i class="text-dark">In Progress</i>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div id="drop3" class="js-drop col-sm-4 text-center border border-dark">
+                <div class="bg-success">
+                    <i class="text-white">Done</i>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="taskBoard.js"></script>
+</body>
+
+</html>

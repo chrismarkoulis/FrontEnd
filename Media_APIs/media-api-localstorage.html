@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5 - Media API</title>
+    <style>
+        body {
+            transition: all 3s ease;
+        }
+
+        #progress {
+            width: 300px;
+            height: 20px;
+            background-color: lightgray;
+            position: relative;
+        }
+
+        #bar {
+            background-color: yellowgreen;
+            width: 0%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.75
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Audio: https://upload.wikimedia.org/wikipedia/commons/e/e3/Austria.ogg -->
+    <audio src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Austria.ogg" controls loop DISautoplay
+        muted></audio>
+
+    <!-- <video DISautoplay muted loop controls src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video> -->
+    <br/>
+    <video id="featured" controls
+        poster="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/BBB-Bunny.png/640px-BBB-Bunny.png"
+        width="300">
+
+        <source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">
+        <source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.ogv" type="video/ogv">
+    </video>
+    <button id="play">Play</button>
+    <div id="progress">100%
+        <div id="bar"></div>
+    </div>
+    <script>
+        const video = document.querySelector("#featured");
+        // Store Current Time on localStorage
+        // 1) Listen on 'timeupdate' event (video time has changed)
+        video.addEventListener("timeupdate", function (e) {
+            // 2) Get currentTime
+            // video === e.target, e.currentTarget, this (will not work with arrow functions)
+            // 3) Store currentTime in localStorage
+            if (localStorage) {
+                localStorage.setItem("currentTime", video.currentTime);
+            }
+        });
+
+        // video.play();
+        // ELEMENT.addEventListener( EVENTTYPE, FUNCTION )
+        video.addEventListener("loadedmetadata", function () {
+            console.log("Loaded Metadata", video.duration);
+        });
+        // 4) Listen on loadeddata, to be safe to change currentTime
+        video.addEventListener("loadeddata", function () {
+            console.log("Loaded Data");
+            // 5) Get stored currentTime
+            if (localStorage) {
+                const storedCurrTime = localStorage.getItem("currentTime");
+                // 6) Set currentTime based on stored value
+                video.currentTime = storedCurrTime;
+            }
+        });
+        video.addEventListener("pause", function () {
+            console.log("Video is paused at: ", video.currentTime);
+        });
+        video.addEventListener("ended", function () {
+            console.log("Video has finished");
+        });
+        const playBtn = document.querySelector("#play");
+        playBtn.addEventListener("click", handlePlay); // "click", function(){ handlePlay(param) }
+        // .call, .apply
+        function handlePlay() {
+            // video.paused ? video.play() : video.pause();           
+            if (video.paused) {
+                video.play();
+                playBtn.innerText = "pause";
+                document.body.style.backgroundColor = "black";
+            } else {
+                video.pause();
+                playBtn.innerText = "play";
+                document.body.style.backgroundColor = "white";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
